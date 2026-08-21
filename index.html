@@ -380,6 +380,63 @@
     .rise { opacity: 1; transform: none; transition: none; }
     .progress { transition: none; }
   }
+
+  /* ─────────── DARK BANDS SHARE THE HERO'S ATMOSPHERE ─────────── */
+  section.dark {
+    background:
+      radial-gradient(720px 480px at 84% 6%, rgba(180, 213, 117, .13), transparent 62%),
+      radial-gradient(820px 560px at 12% 88%, rgba(91, 162, 236, .20), transparent 64%),
+      linear-gradient(168deg, #041420 0%, var(--navy) 52%, #01283F 100%);
+  }
+  section.dark::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 25% 100%;
+  }
+
+  /* ─────────── STEP SEQUENCE ─────────── */
+  .steps { list-style: none; margin: 36px 0 8px; padding: 0; counter-reset: none; }
+  .step {
+    display: grid; grid-template-columns: 84px 1fr; gap: 26px; align-items: start;
+    padding: 26px 0; border-top: 1px solid var(--rule); max-width: none;
+  }
+  .step:last-child { border-bottom: 1px solid var(--rule); }
+  .step__n {
+    font-family: var(--display); font-size: 54px; font-weight: 700; line-height: .9;
+    letter-spacing: -.05em; color: var(--rule); font-variant-numeric: tabular-nums;
+  }
+  .step h4 { margin: 0 0 6px; font-size: 18px; text-transform: none; letter-spacing: -.015em; color: var(--ink); }
+  .step p { margin: 0; color: var(--ink-2); }
+  .step__why {
+    display: inline-block; margin-top: 10px; font-size: 13px; color: var(--ink-3);
+    border-left: 2px solid var(--blue); padding-left: 12px;
+  }
+  /* the gate is the centrepiece, so it gets the weight */
+  .step--gate {
+    background: linear-gradient(100deg, var(--stop-tint) 0%, transparent 72%);
+    border-top-color: var(--stop); border-top-width: 2px;
+    padding-left: 22px; margin-left: -22px; padding-right: 22px;
+  }
+  .step--gate .step__n { color: var(--stop); }
+  .step--gate h4 { color: var(--stop); }
+  .step--gate .step__why { border-left-color: var(--stop); }
+  .gate-flag {
+    display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .14em;
+    background: var(--stop); color: #fff; padding: 3px 9px; margin-bottom: 9px;
+  }
+  @media (max-width: 620px) { .step { grid-template-columns: 54px 1fr; gap: 16px; } .step__n { font-size: 36px; } }
+
+  /* ─────────── STAGGERED EXHIBIT GALLERY ─────────── */
+  section.dark figure:nth-of-type(even) { margin-left: auto; margin-right: 0; max-width: 92%; }
+  section.dark figure:nth-of-type(odd) { margin-right: auto; margin-left: 0; max-width: 92%; }
+  section.dark figure.wide { max-width: 100%; }
+  .shot { transition: transform .5s ease, box-shadow .5s ease; }
+  section.dark .shot { box-shadow: 0 26px 60px rgba(0, 0, 0, .42); }
+  section.dark figure:hover .shot { transform: translateY(-4px); }
+
+  /* ─────────── COUNTERS ─────────── */
+  .count { font-variant-numeric: tabular-nums; }
+  .arw { color: var(--lime); }
 </style>
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
@@ -427,15 +484,15 @@
   <div class="wrap">
     <div class="stats">
       <div class="stat">
-        <div class="stat__n">20+ <span>→</span> 1</div>
+        <div class="stat__n"><span class="count" data-to="20">0</span>+ <span class="arw">&rarr;</span> 1</div>
         <div class="stat__l">Clicks to approve a loan, replaced by one sentence</div>
       </div>
       <div class="stat">
-        <div class="stat__n">2</div>
+        <div class="stat__n"><span class="count" data-to="2">0</span></div>
         <div class="stat__l">Pull requests merged into openMF, both reviewed</div>
       </div>
       <div class="stat">
-        <div class="stat__n">98</div>
+        <div class="stat__n"><span class="count" data-to="98">0</span></div>
         <div class="stat__l">Automated tests written, guarding the banking rules</div>
       </div>
       <div class="stat">
@@ -479,13 +536,41 @@
     <h2>An assistant that proposes, and an officer who disposes</h2>
     <p class="lead">The Copilot is a chat panel inside the app officers already use. Four things happen to every message, in the same order, every time.</p>
 
-    <div class="table-wrap"><table>
-      <tr><th style="width:32px">#</th><th>What happens</th><th>Why it is built that way</th></tr>
-      <tr><td class="num"><b>1</b></td><td>The assistant works out which banking operation the sentence means</td><td>Officers describe outcomes, not API calls</td></tr>
-      <tr><td class="num"><b>2</b></td><td>If it only reads data, it answers straight away</td><td>Looking something up carries no risk</td></tr>
-      <tr><td class="num"><b>3</b></td><td>If it would change data, <strong>everything stops</strong> and a confirmation card appears</td><td>Nothing has reached the bank yet. This pause is the product</td></tr>
-      <tr><td class="num"><b>4</b></td><td>On Confirm it executes <strong>as that officer</strong></td><td>Existing permissions apply and the audit trail names a real person</td></tr>
-    </table></div>
+    <ol class="steps">
+      <li class="step">
+        <div class="step__n">1</div>
+        <div>
+          <h4>It works out what you meant</h4>
+          <p>The assistant maps the sentence onto one of twelve banking operations, resolving names to identifiers along the way.</p>
+          <span class="step__why">Officers describe outcomes, not API calls.</span>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__n">2</div>
+        <div>
+          <h4>Reading data answers immediately</h4>
+          <p>Balances, schedules, client records and product lists come straight back, with no interruption.</p>
+          <span class="step__why">Looking something up carries no risk.</span>
+        </div>
+      </li>
+      <li class="step step--gate">
+        <div class="step__n">3</div>
+        <div>
+          <span class="gate-flag">EVERYTHING STOPS</span>
+          <h4>Anything that changes data pauses here</h4>
+          <p>A confirmation card appears showing the exact operation and the exact values. No request has reached the banking system, and the card is built by the server from the parsed operation rather than written by the AI.</p>
+          <span class="step__why">This pause is the product. There is no setting that removes it.</span>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__n">4</div>
+        <div>
+          <h4>On Confirm, it runs as that officer</h4>
+          <p>A separate, re-authenticated request executes the operation with the officer's own Fineract credential and a reference the gateway generated.</p>
+          <span class="step__why">Existing permissions apply and the audit trail names a real person.</span>
+        </div>
+      </li>
+    </ol>
 
     <div class="note note--go">
       <h4>The property everything else rests on</h4>
@@ -997,6 +1082,30 @@ MIFOS_COPILOT_MCP_BASE_URL=https://&lt;the gateway address&gt;</code></pre>
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    // Count the headline figures up once, when the strip first appears.
+    var counted = false;
+    function runCounters() {
+      if (counted) { return; }
+      var strip = document.querySelector('.stats');
+      if (!strip || strip.getBoundingClientRect().top > window.innerHeight) { return; }
+      counted = true;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      Array.prototype.forEach.call(document.querySelectorAll('.count'), function (el) {
+        var to = parseInt(el.getAttribute('data-to'), 10) || 0;
+        if (reduce || to === 0) { el.textContent = String(to); return; }
+        var start = null, dur = 1100;
+        function tick(ts) {
+          if (!start) { start = ts; }
+          var k = Math.min((ts - start) / dur, 1);
+          el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 3))));
+          if (k < 1) { requestAnimationFrame(tick); }
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+    window.addEventListener('scroll', runCounters, { passive: true });
+    runCounters();
 
     // Reveal blocks as they enter the viewport; content is visible without JS.
     var blocks = document.querySelectorAll('section > .wrap > *, section figure, .stats');
