@@ -10,7 +10,7 @@
 
 Mifos X is the web app that loan officers at microfinance institutions use every day. Most tasks mean going through many forms. My project adds an AI assistant to the app, so an officer can just ask in normal language: find a client, show a repayment schedule, create a client, submit and approve a loan.
 
-The most important rule of the design: **the assistant can never change a record by itself.** When it wants to do a write, the reply stops and the officer gets a card showing exactly what will happen, with the client, the product and the amount in plain words. Nothing runs until a human clicks approve.
+The most important rule: the assistant can never change a record by itself. When it wants to do a write, the reply stops and the officer gets a card showing exactly what will happen, with the client, the product and the amount in plain words. Nothing runs until a human clicks approve.
 
 The gateway also has no Fineract account of its own. It sends the officer's own login with every call, so the permissions the institution already set up still decide what is allowed. There are 12 tools in total, 7 that read and 5 that write, all declared in one manifest file. Anything outside that list is refused.
 
@@ -56,18 +56,18 @@ Some real examples:
 
 - He created a client whose first name was `999999999999999` and Fineract accepted it, because the web app's forms do that validation and the assistant was skipping it. That became #439.
 - Writes started failing every evening because I was using the server's clock instead of Fineract's business date. That became #433.
-- He searched for a client in lowercase and got "not found" even though the client existed. That became #443.
+- He searched for a client in lowercase and got "not found" even though the client existed. I fixed that in #443.
 - He asked two questions quickly and the panel said the model was down, when really he was only rate limited for a few seconds.
 
 Almost every PR after #421 exists because someone used the thing for real and it fell short somewhere.
 
 ## Current state
 
-The Copilot works end to end against the community sandbox: reading client, loan and savings data, and creating clients and running the loan lifecycle behind the confirmation step. It ships off by default, and a deployment turns it on with two environment values. The gateway has 135 tests, the panel has 150, and a Playwright suite drives the panel in a real browser as part of the web app's CI.
+The Copilot works end to end against the community sandbox: reading client, loan and savings data, and creating clients and running the loan lifecycle behind the confirmation step. It is off by default and can be turned on with two environment variables. The gateway has 135 tests, the panel has 150, and a Playwright suite drives the panel in a real browser as part of the web app's CI.
 
 ## What is not finished
 
-- Conversations and pending confirmation cards live in the gateway's memory, so they do not survive a restart. Fine for one instance, not for a cluster.
+- Conversations and pending confirmation cards live in the gateway's memory, so they do not survive a restart. This is fine for a single instance but will not work for a cluster.
 - The manifest covers individual lending only. Group and centre lending is the obvious next step.
 - Running the model on-premise through Ollama works in the code but is not documented yet, for institutions that cannot use a cloud provider.
 - PR #443 is still in review.
@@ -76,7 +76,7 @@ The Copilot works end to end against the community sandbox: reading client, loan
 
 I used Claude as a coding assistant throughout this project: for brainstorming designs, debugging, writing code and tests, and drafting PR descriptions. I want to be upfront about that. Every change was tested end to end against the community sandbox before it went up, every PR went through Victor's review, and the decisions about what to build and why were mine.
 
-The biggest thing I gained this summer was not code, it was how Victor made me think. He never told me the fix. He would say something like "in production the API URL can be different from the UI URL" and leave me to work out what that meant for the design. Learning to read a review comment as a question about users, instead of a complaint about code, changed how I work.
+The biggest thing I gained this summer was not code, it was how Victor made me think. He never told me the fix. He would say something like "in production the API URL can be different from the UI URL" and leave me to work out what that meant for the design. Slowly I learned to read his comments as questions about the users, not complaints about my code. That changed how I work.
 
 ## Thanks
 
