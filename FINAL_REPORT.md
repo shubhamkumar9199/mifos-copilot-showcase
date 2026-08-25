@@ -76,6 +76,8 @@ The Copilot works end to end against the community sandbox: reading client, loan
 
 I used Claude as a coding assistant throughout this project: for brainstorming designs, debugging, writing code and tests, and drafting PR descriptions. I want to be upfront about that. Every change was tested end to end against the community sandbox before it went up, every PR went through Victor's review, and the decisions about what to build and why were mine.
 
+Working this way also changed how I learn. Before this project I would pick up a new technology by following tutorials for days. This summer I had to learn Spring WebFlux, server-sent events and Playwright in weeks, and having an assistant to question made that much faster. I could ask why one approach is better than another, argue with the answer, and test it right away. It did not think for me, but it made me think in more directions than I would have alone, and it taught me to check everything instead of trusting the first answer. That habit of questioning and verifying is something I will keep.
+
 The biggest thing I gained this summer was not code, it was how Victor made me think. He never told me the fix. He would say something like "in production the API URL can be different from the UI URL" and leave me to work out what that meant for the design. Slowly I learned to read his comments as questions about the users, not complaints about my code. That changed how I work.
 
 ## Thanks
